@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:saran_task/saran.dart';
 import 'package:saran_task/task%201.dart';
 import 'package:saran_task/task1.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: task()
+      home: saran()
     );
   }
 }
