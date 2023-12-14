@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'saran.dart';
 enum SortOrder {Ascending,Descending}
 class task extends StatefulWidget {
   const task({super.key});
@@ -10,19 +11,21 @@ class task extends StatefulWidget {
 class _taskState extends State<task> {
 
   TextEditingController _n = TextEditingController();
-  List<String> _writtentext = [];
+  List<int> _writtentext = [];
   String _min = "";
   String _max = "";
   SortOrder _sortOrder = SortOrder.Ascending;
 
 
-
   void _addItem(){
+    int enteredValue = int.tryParse(_n.text) ?? 0;
     setState(() {
-      _writtentext.add(_n.text);
+      if (enteredValue < 5) {
+        _writtentext.add(enteredValue);
+        _sortList();
+        _updateMinandMax();
+      }
       _n.clear();
-      _writtentext.sort((a, b) => b.compareTo(a));
-      _updateMinandMax();
     });
   }
 
@@ -36,17 +39,28 @@ class _taskState extends State<task> {
 
   void _updateMinandMax(){
     if(_writtentext.isNotEmpty){
-      _min = _writtentext.first;
-      _max = _writtentext.last;
+      _min = _writtentext.first.toString();
+      _max = _writtentext.last.toString();
     }else{
       _min = "";
       _max = "";
     }
   }
 
+  void _onListItemTap(int value) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => saran(value: value),
+      ),
+    );
+  }
+
 
   @override
+
   Widget build(BuildContext context) {
+    List<int> filteredList = _writtentext.where((item) => item < 5).toList();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -101,10 +115,18 @@ class _taskState extends State<task> {
               SizedBox(height: 30),
               Expanded(
                 child: ListView.builder(
-                  itemCount: _writtentext.length,
+                  itemCount: filteredList.length,
                     itemBuilder: (BuildContext context, int index){
-                    return ListTile(
-                      title: Text(_writtentext[index]),
+                    return GestureDetector(
+                      onTap: (){
+                        _onListItemTap(filteredList[index]);
+                      },
+                      child: Card(
+                        elevation: 9,
+                        child: ListTile(
+                          title: Text(filteredList[index].toString()),
+                        ),
+                      ),
                     );
                     }
                 ),
