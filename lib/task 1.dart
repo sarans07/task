@@ -17,7 +17,10 @@ class _taskState extends State<task> {
   SortOrder _sortOrder = SortOrder.Ascending;
 
 
-  void _addItem(){
+
+
+  void _addItem() {
+    if (_n.text.isNotEmpty){
     int enteredValue = int.tryParse(_n.text) ?? 0;
     setState(() {
       if (enteredValue < 5) {
@@ -28,6 +31,8 @@ class _taskState extends State<task> {
       _n.clear();
     });
   }
+  }
+
 
   void _sortList() {
     if (_sortOrder == SortOrder.Ascending) {
