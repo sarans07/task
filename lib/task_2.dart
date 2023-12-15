@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:saran_task/task_2_1.dart';
 
+import 'edit_screen.dart';
+
 class task2 extends StatefulWidget {
   const task2({Key? key}) : super(key: key);
 
@@ -19,24 +21,47 @@ class _task2State extends State<task2> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => task2_1(data: data),
+        builder: (context) => EditScreen(data: data),
       ),
-    );
+    ).then((editedData) {
+      if (editedData != null) {
+        setState(() {
+          _writtentext[_writtentext.indexWhere((element) => element == data)] =
+              editedData;
+        });
+      }
+    });
+  }
+
+  void _deleteItem(int index) {
+    setState(() {
+      _writtentext.removeAt(index);
+    });
   }
 
   void _addItemToList() {
     String text1 = _n.text;
     String text2 = _p.text;
     String text3 = _e.text;
+
     if (text1.isNotEmpty && text2.isNotEmpty && text3.isNotEmpty) {
       setState(() {
-      _writtentext.add('$text1\n$text2\n$text3');
-      _n.clear();
-      _p.clear();
-      _e.clear();
-    });
+        _writtentext.add('$text1\n$text2\n$text3');
+        _n.clear();
+        _p.clear();
+        _e.clear();
+      });
+    }
   }
+  void _navigateToDetails(String data) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => task2_1(data: data),
+      ),
+    );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,27 +104,43 @@ class _task2State extends State<task2> {
               ),
               SizedBox(height: 30),
               Expanded(
-                child: ListView.builder(
-                  itemCount: _writtentext.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        _navigateToDetail(_writtentext[index]);
-                      },
-                      child: Card(
-                        elevation: 9,
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            _writtentext[index],
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                      ),
-                    );
+            child: ListView.builder(
+              itemCount: _writtentext.length,
+              itemBuilder: (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () {
+                    _navigateToDetails(_writtentext[index]);
                   },
-                ),
-              ),
+                  child: Card(
+                    elevation: 9,
+                    child: ListTile(
+                      title: Text(
+                        _writtentext[index],
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.edit),
+                            onPressed: () {
+                              _navigateToDetail(_writtentext[index]);
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              _deleteItem(index);
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          )
             ],
           ),
         ),
