@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:saran_task/task_2_1.dart';
+
 class task2 extends StatefulWidget {
   const task2({Key? key}) : super(key: key);
 
@@ -11,25 +13,29 @@ class _task2State extends State<task2> {
   TextEditingController _n = TextEditingController();
   TextEditingController _p = TextEditingController();
   TextEditingController _e = TextEditingController();
+  List<String> _writtentext = [];
 
-
-
-  void _navigateToDetail() {
-    String text1 = _n.text;
-    String text2 = _p.text;
-    String text3 = _e.text;
-
-    _n.clear();
-    _p.clear();
-    _e.clear();
-
-
+  void _navigateToDetail(String data) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => task2_1(text1: text1, text2: text2, text3: text3),
+        builder: (context) => task2_1(data: data),
       ),
     );
+  }
+
+  void _addItemToList() {
+    String text1 = _n.text;
+    String text2 = _p.text;
+    String text3 = _e.text;
+    if (text1.isNotEmpty && text2.isNotEmpty && text3.isNotEmpty) {
+      setState(() {
+      _writtentext.add('$text1\n$text2\n$text3');
+      _n.clear();
+      _p.clear();
+      _e.clear();
+    });
+  }
   }
 
   @override
@@ -45,7 +51,7 @@ class _task2State extends State<task2> {
                 controller: _n,
                 decoration: InputDecoration(
                   labelText: 'Enter Your Name',
-                    border: OutlineInputBorder()
+                  border: OutlineInputBorder(),
                 ),
               ),
               SizedBox(height: 30),
@@ -53,7 +59,7 @@ class _task2State extends State<task2> {
                 controller: _p,
                 decoration: InputDecoration(
                   labelText: 'Enter Mobile Number',
-                    border: OutlineInputBorder()
+                  border: OutlineInputBorder(),
                 ),
               ),
               SizedBox(height: 30),
@@ -61,33 +67,39 @@ class _task2State extends State<task2> {
                 controller: _e,
                 decoration: InputDecoration(
                   labelText: 'Enter E-mail',
-                    border: OutlineInputBorder()
+                  border: OutlineInputBorder(),
                 ),
               ),
               SizedBox(height: 30),
-              ElevatedButton(onPressed: (){
-                _navigateToDetail();
-              },
-                  child: Text("Ok")
+              ElevatedButton(
+                onPressed: () {
+                  _addItemToList();
+                },
+                child: Text("Ok"),
               ),
-              // SizedBox(height: 30),
-              // Expanded(
-              //   child: ListView.builder(
-              //       itemCount: _addItem.length,
-              //       itemBuilder: (BuildContext context, int index){
-              //         return GestureDetector(
-              //           onTap: (){
-              //           },
-              //           child: Card(
-              //             elevation: 9,
-              //             child: ListTile(
-              //               title: Text(_writtentext[index].toString()),
-              //             ),
-              //           ),
-              //         );
-              //       }
-              //   ),
-              // ),
+              SizedBox(height: 30),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _writtentext.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        _navigateToDetail(_writtentext[index]);
+                      },
+                      child: Card(
+                        elevation: 9,
+                        child: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            _writtentext[index],
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
             ],
           ),
         ),
