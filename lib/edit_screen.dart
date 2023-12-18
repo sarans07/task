@@ -34,7 +34,10 @@ class _EditScreenState extends State<EditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Edit Data'),
+        title: Text('Edit Data',
+        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.blue,
       ),
       body: Container(
         padding: EdgeInsets.all(10),
@@ -69,7 +72,7 @@ class _EditScreenState extends State<EditScreen> {
               onPressed: () {
                 String editedData =
                     '${_n.text}\n${_p.text}\n${_e.text}';
-                Navigator.pop(context, editedData); // Pass back the edited data
+                Navigator.pop(context, editedData);
               },
               child: Text('Save'),
             ),
@@ -79,3 +82,4 @@ class _EditScreenState extends State<EditScreen> {
     );
   }
 }
+

@@ -66,6 +66,11 @@ class _task2State extends State<task2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Center(child: Text('Details',
+        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold)
+          )),backgroundColor: Colors.blue,
+      ),
       body: SafeArea(
         child: Container(
           padding: EdgeInsets.all(10),
@@ -112,11 +117,12 @@ class _task2State extends State<task2> {
                     _navigateToDetails(_writtentext[index]);
                   },
                   child: Card(
+                    color: Colors.blue[200],
                     elevation: 9,
                     child: ListTile(
                       title: Text(
                         _writtentext[index],
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
                       ),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,

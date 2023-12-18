@@ -20,7 +20,10 @@ class _task2_1State extends State<task2_1> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Detail Page'),
+        title: Text('Detail Page',
+        style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.blue,
       ),
       body: SafeArea(
         child: Container(
@@ -29,7 +32,7 @@ class _task2_1State extends State<task2_1> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Card(
-                color: Colors.blue,
+                color: Colors.blue[300],
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
