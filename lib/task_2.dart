@@ -12,10 +12,10 @@ class task2 extends StatefulWidget {
 }
 
 class _task2State extends State<task2> {
-  TextEditingController _n = TextEditingController();
-  TextEditingController _p = TextEditingController();
-  TextEditingController _e = TextEditingController();
-  List<String> _writtentext = [];
+  final TextEditingController _n = TextEditingController();
+  final TextEditingController _p = TextEditingController();
+  final TextEditingController _e = TextEditingController();
+  final List<String> _writtentext = [];
 
   void _navigateToDetail(String data) {
     Navigator.push(
@@ -26,8 +26,7 @@ class _task2State extends State<task2> {
     ).then((editedData) {
       if (editedData != null) {
         setState(() {
-          _writtentext[_writtentext.indexWhere((element) => element == data)] =
-              editedData;
+          _writtentext[_writtentext.indexWhere((element) => element == data)] = editedData;
         });
       }
     });

@@ -65,7 +65,7 @@ class _taskState extends State<task> {
   @override
 
   Widget build(BuildContext context) {
-    List<int> filteredList = _writtentext.where((item) => item < 5).toList();
+    List<int> filteredList = _writtentext.where((item) => item < 10).toList();
     return Scaffold(
       body: SafeArea(
         child: Container(
